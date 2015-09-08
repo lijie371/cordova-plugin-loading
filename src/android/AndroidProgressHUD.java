@@ -1,4 +1,4 @@
-package com.ataw.cordova.plugin.Loading;
+package com.ataw.cordova.plugin;
 
 import android.app.Dialog;
 import android.content.Context;
