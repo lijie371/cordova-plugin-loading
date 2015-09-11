@@ -5,20 +5,19 @@ import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
-import org.json.JSONException; 
-import com.ataw.cordova.plugin.AndroidProgressHUD;
+import org.json.JSONException;
 
 import java.lang.Override;
 
 public class LoadingPlugin extends CordovaPlugin {
 
-	private AndroidProgressHUD activityIndicator = null;
-	private String text = null;
+	private AndroidProgressHUD fActivityIndicator = null;
+	private String fText = null;
 	private boolean enableLoadingWhenChangePage = false;
 
 	@Override
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-		text = this.preferences.getString("defaultLoadingTitle", "loading");
+		fText = this.preferences.getString("defaultLoadingTitle", "loading");
 		enableLoadingWhenChangePage = this.preferences.getBoolean("enableLoadingWhenChangePage", true);
 	}
 
@@ -26,7 +25,7 @@ public class LoadingPlugin extends CordovaPlugin {
 	public Object onMessage(String id, Object data) {
 		if(enableLoadingWhenChangePage) {
 			if (id == "onPageStarted")
-				show(text);
+				show(fText);
 			else if (id == "onPageFinished" || id == "onReceivedError")
 				hide();
 		}
@@ -49,27 +48,20 @@ public class LoadingPlugin extends CordovaPlugin {
 		return false;
 	}
 
-	/**
-	 * This show the ProgressDialog
-	 * @param text - Message to display in the Progress Dialog
-	 */
 	public void show(String text) {
-		this.text = text;
+		this.fText = text;
 
 		cordova.getActivity().runOnUiThread(new Runnable() {
 			public void run() {
-				activityIndicator = AndroidProgressHUD.show(ActivityIndicator.this.cordova.getActivity(), ActivityIndicator.this.text, true,true,null);
+				fActivityIndicator = AndroidProgressHUD.show(LoadingPlugin.this.cordova.getActivity(), LoadingPlugin.this.fText, true,true,null);
 			}
 		});
 	}
 
-	/**
-	 * This hide the ProgressDialog
-	 */
 	public void hide() {
-		if (activityIndicator != null) {
-			activityIndicator.dismiss();
-			activityIndicator = null;
+		if (fActivityIndicator != null) {
+			fActivityIndicator.dismiss();
+			fActivityIndicator = null;
 		}
 	}
 }

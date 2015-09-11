@@ -13,16 +13,11 @@ import android.widget.TextView;
 
 public class AndroidProgressHUD extends Dialog {
 	Context context;
-	public AndroidProgressHUD(Context context) {
-		super(context);
-		this.context=context;
-	}
 
 	public AndroidProgressHUD(Context context, int theme) {
 		super(context, theme);
 		this.context=context;
 	}
-
 
 	public void onWindowFocusChanged(boolean hasFocus){
 	ImageView imageView = (ImageView) findViewById(context.getResources().getIdentifier("spinnerImageView", "id", context.getPackageName()));
